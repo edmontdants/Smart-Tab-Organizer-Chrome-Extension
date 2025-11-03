@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "name": "Smart Tab Organizer",
+  "version": "1.0",
+  "description": "Search, select, reorder and move tabs between Chrome windows.",
+  "permissions": ["tabs", "windows"],
+  "background": { "service_worker": "background.js" },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": { "48": "icons/Blackvariant-Button-Ui-App-Pack-One-Lite-Icon.48.png" }
+  }
+}

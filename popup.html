@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Smart Tab Organizer</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        width: 420px;
+        max-height: 700px;
+        overflow-y: auto;
+        margin: 0;
+        padding: 10px;
+      }
+      h3 { margin: 6px 0 10px; }
+      #controls {
+        display:flex;
+        gap:8px;
+        align-items: center;
+        margin-bottom:8px;
+      }
+      #search {
+        flex:1;
+        padding:6px 8px;
+        border:1px solid #ccc;
+        border-radius:6px;
+        font-size:14px;
+      }
+      #actions {
+        margin:8px 0 12px;
+        padding:8px;
+        border:1px solid #e0e0e0;
+        border-radius:6px;
+        background:#fafafa;
+      }
+      label { font-weight:600; margin-right:6px; }
+      select, input[type="number"], button {
+        padding:6px 8px;
+        font-size:14px;
+        border-radius:6px;
+        border:1px solid #ccc;
+      }
+      button { cursor:pointer; }
+      .window {
+        border:1px solid #bbb;
+        border-radius:6px;
+        margin-bottom:10px;
+        background:#fff;
+      }
+      .window-header {
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        padding:8px;
+        background:#f2f2f2;
+        cursor:pointer;
+        border-top-left-radius:6px;
+        border-top-right-radius:6px;
+      }
+      .window-header .meta { font-size:12px; color:#666; }
+      .window-body { padding:8px; display:block; }
+      .window-body.collapsed { display:none; }
+      .tab-row {
+        display:flex;
+        align-items:center;
+        gap:8px;
+        padding:6px;
+        border-bottom:1px solid #f0f0f0;
+      }
+      .tab-row:last-child { border-bottom:0; }
+      .tab-title {
+        flex:1;
+        overflow:hidden;
+        white-space:nowrap;
+        text-overflow:ellipsis;
+        cursor:pointer;
+      }
+      .tab-info { font-size:11px; color:#777; margin-left:6px; max-width:90px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+      .controls-row { display:flex; gap:8px; align-items:center; margin-top:6px; flex-wrap:wrap; }
+      .status { margin-top:8px; font-size:13px; color:#0a6; min-height:18px; }
+      .error { color:#c33; }
+      .tab-number {
+        width:32px;
+        text-align:center;
+        font-weight:600;
+        color:#333;
+      }
+      .tab-close {
+	margin-left: 6px;
+	padding: 4px 6px;
+	border: 1px solid #e0e0e0;
+	background: transparent;
+	border-radius: 6px;
+	cursor: pointer;
+	font-weight: 700;
+	line-height: 1;
+      }
+      .tab-close:hover { background: #fee; border-color: #f88; }
+      .tab-row .tab-close { flex: 0 0 auto; }
+      .dragging {
+        opacity: 0.6 !important;
+        background: #d9edf7 !important;
+      }
+    </style>
+  </head>
+  <body>
+    <h3>🧭 Smart Tab Organizer</h3>
+
+    <div id="controls">
+      <input id="search" type="text" placeholder="🔍 Search tabs by title or URL..." />
+      <button id="selectAllBtn" title="Select all visible">Select all</button>
+    </div>
+
+    <div id="actions">
+      <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+        <label for="targetWindow">Move selected to:</label>
+        <select id="targetWindow"></select>
+
+	<label for="positionInput">Position (start from 1):</label>
+	<input id="positionInput" type="number" min="1" placeholder="optional" style="width:88px" />
+
+        <button id="moveBtn">Move selected</button>
+	<button id="activateBtn">Jump to selected</button>
+	<button id="clearBtn">Clear selection</button>
+	<button id="closeSelectedBtn" title="Close selected tabs">Close selected</button>
+      </div>
+      <div class="controls-row">
+	<small>Notes: Leave Position empty to append at end when moving between windows. Position is 1-based (enter 1 to place at first). You can also drag selected tabs as a block. Use "Close selected" to close checked tabs (confirmation required).</small>
+      </div>
+    </div>
+
+    <div id="windowsContainer"></div>
+
+    <div id="status" class="status"></div>
+
+    <script src="popup.js"></script>
+  </body>
+</html>
